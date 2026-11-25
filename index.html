@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A practical reference for MAGI-2 video prompting. Watch source-linked examples, plan a timed shot, and compare the results.">
+  <title>MAGI-2 Video Prompt Library</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --background: #171815;
+      --panel: #21231d;
+      --text: #f5f1e7;
+      --muted: #c6c5b9;
+      --accent: #d3f980;
+      --line: #414438;
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--background); }
+    body {
+      margin: 0;
+      color: var(--text);
+      font: 17px/1.65 system-ui, sans-serif;
+    }
+
+    main, footer { width: min(1050px, calc(100% - 2.5rem)); margin: auto; }
+    header { padding: 1.5rem 0; border-bottom: 1px solid var(--line); }
+    nav, .links { display: flex; flex-wrap: wrap; gap: .6rem 1.25rem; }
+    nav a, footer a { color: var(--muted); }
+    a { color: var(--accent); text-underline-offset: .18em; }
+    a:hover { color: var(--text); }
+    a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    h1, h2, h3 { line-height: 1.08; margin: 0 0 .65rem; }
+    h1 { font-size: clamp(2.5rem, 6vw, 5rem); letter-spacing: -.06em; }
+    h2 { font-size: clamp(1.65rem, 4vw, 2.5rem); letter-spacing: -.035em; }
+    h3 { font-size: 1.12rem; }
+    p { max-width: 70ch; margin: .6rem 0 1rem; }
+    .muted, figcaption { color: var(--muted); }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      align-items: center;
+      gap: 2rem;
+      padding: 3.25rem 0;
+    }
+
+    figure { margin: 0; }
+    figure img { display: block; width: 100%; height: auto; border-radius: .7rem; }
+    figcaption { margin-top: .4rem; font-size: .82rem; }
+    .section { padding: 2rem 0; border-top: 1px solid var(--line); }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; margin-top: 1.25rem; }
+    .card { padding: 1.1rem; border: 1px solid var(--line); border-radius: .65rem; background: var(--panel); }
+    .card p { margin-bottom: .65rem; }
+    pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      margin: 1rem 0;
+      padding: 1.1rem;
+      background: var(--panel);
+      border-left: 3px solid var(--accent);
+      line-height: 1.55;
+      font-size: .86rem;
+    }
+
+    ol { padding-left: 1.35rem; }
+    li + li { margin-top: .4rem; }
+    footer { padding: 1.4rem 0 2.2rem; border-top: 1px solid var(--line); font-size: .9rem; }
+
+    @media (max-width: 760px) {
+      .hero, .grid { grid-template-columns: 1fr; }
+      .hero { gap: 1rem; padding: 2.25rem 0; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <nav aria-label="Prompt library">
+        <a href="#examples">Video examples</a>
+        <a href="#exercise">Timed prompt</a>
+        <a href="#retest">Retest method</a>
+        <a href="https://github.com/Chang-Hai/awesome-magi-2-prompts">Repository</a>
+      </nav>
+    </header>
+
+    <section class="hero" aria-labelledby="main-title">
+      <div>
+        <h1 id="main-title">MAGI-2 Video Prompt Library</h1>
+        <p class="muted">Study how reference images, movement and sound shape a scene. Try a small timed prompt, then compare the output against the shot you planned.</p>
+        <div class="links">
+          <a href="https://github.com/Chang-Hai/awesome-magi-2-prompts/blob/main/TEMPLATES.md">Browse six prompt templates</a>
+          <a href="https://github.com/Chang-Hai/awesome-magi-2-prompts/blob/main/README.zh-CN.md" lang="zh-Hans">简体中文</a>
+          <a href="https://github.com/Chang-Hai/awesome-magi-2-prompts/blob/main/README.ja-JP.md" lang="ja">日本語</a>
+          <a href="https://github.com/Chang-Hai/awesome-magi-2-prompts/blob/main/README.es-ES.md" lang="es">Español</a>
+        </div>
+      </div>
+      <figure>
+        <img src="public/images/two-angle-desk-lamp.webp" alt="A cream desk lamp lighting a wooden desk" width="960" height="541">
+        <figcaption>Storyboard for a product reveal. The published videos are linked below.</figcaption>
+      </figure>
+    </section>
+
+    <section id="examples" class="section">
+      <h2>Watch a published example</h2>
+      <p class="muted">Watch each clip with sound enabled. The case notes show the source, available input details and what to look for in the output.</p>
+      <div class="grid">
+        <article class="card">
+          <h3>Product lighting</h3>
+          <p>Watch how reflections and edge highlights shift as the shot moves.</p>
+          <a href="https://github.com/Chang-Hai/awesome-magi-2-prompts/blob/main/CASES.md#studio-quality-product-ads">Open product-ad case</a>
+        </article>
+        <article class="card">
+          <h3>Shot timing</h3>
+          <p>Mark where the camera cuts and compare the sound on both sides of each cut.</p>
+          <a href="https://github.com/Chang-Hai/awesome-magi-2-prompts/blob/main/CASES.md#precision-timeline-shot-cuts">Open timeline case</a>
+        </article>
+        <article class="card">
+          <h3>Dialogue</h3>
+          <p>Follow who speaks, who reacts and how long the scene holds between lines.</p>
+          <a href="https://github.com/Chang-Hai/awesome-magi-2-prompts/blob/main/CASES.md#boat-dialogue-autonomous-directing">Open dialogue case</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="exercise" class="section">
+      <h2>Test one movement and one sound</h2>
+      <p>Start with a reference photo of a lamp you can use. A second image can show the switch. Keep the camera still so you can find the exact frame where the switch moves.</p>
+      <pre><code>Frame the lamp from the reference photo on a dark desk. Keep the shade and switch in view.
+0–2 seconds. Hold the shot steady with quiet room tone.
+At 2 seconds, a hand moves the switch once. Play one click as the light turns on.
+2–6 seconds. Hold the shot and keep the lamp’s shape, crop and room tone steady.</code></pre>
+      <p>Find the first bright frame and the first audible click in your editor. Write down the time difference. You can run this exercise in a video generator that supports reference media and native sound, such as <a href="https://getmagi2.com/">GetMagi2</a>.</p>
+    </section>
+
+    <section id="retest" class="section">
+      <h2>Compare a second run</h2>
+      <ol>
+        <li>Save the prompt, the reference files and their roles. Record the model variant and the settings each service actually accepts.</li>
+        <li>Use the same attempt budget. Track missed cues, extra cuts and changes to the subject across frames.</li>
+        <li>Keep the original output and any failed attempts. Record the cost of retries alongside the accepted result.</li>
+      </ol>
+      <p><a href="https://github.com/Chang-Hai/awesome-magi-2-prompts/blob/main/docs/RETEST.md">Read the full retest protocol</a> · <a href="https://github.com/Chang-Hai/awesome-magi-2-prompts/blob/main/docs/FAQ.md">Read the model and provider FAQ</a></p>
+    </section>
+  </main>
+  <footer>
+    Public project documentation. Video sources and sample authors are credited in the <a href="https://github.com/Chang-Hai/awesome-magi-2-prompts/blob/main/CASES.md">case library</a>.
+  </footer>
+</body>
+</html>
