@@ -1,0 +1,124 @@
+"""Regenerate the readable prompt catalog from prompts.json."""
+import argparse
+import json
+import re
+from pathlib import Path
+from urllib.parse import urlencode
+
+ROOT = Path(__file__).resolve().parent.parent
+MODES = {
+    "text-to-video": "Text to video",
+    "image-to-video": "Image to video",
+    "reference-to-video": "Reference to video",
+}
+RATIOS = {"21:9", "16:9", "4:3", "1:1", "3:4", "9:16"}
+FIELDS = {"slug", "title", "mode", "duration_seconds", "aspect_ratio", "assets", "prompt", "review"}
+
+
+def read_catalog():
+    catalog = json.loads((ROOT / "prompts.json").read_text(encoding="utf-8"))
+    if not isinstance(catalog, list) or not catalog:
+        raise ValueError("prompts.json must contain a nonempty list of prompts")
+
+    seen = set()
+    for index, entry in enumerate(catalog, start=1):
+        if not isinstance(entry, dict) or set(entry) != FIELDS:
+            raise ValueError(f"Prompt {index} has unexpected or missing fields")
+
+        slug = entry["slug"]
+        if not isinstance(slug, str) or not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", slug) or slug in seen:
+            raise ValueError(f"Prompt {index} must have a unique lowercase slug")
+        seen.add(slug)
+
+        mode = entry["mode"]
+        if mode not in MODES or entry["aspect_ratio"] not in RATIOS:
+            raise ValueError(f"{slug} has an unsupported mode or aspect ratio")
+        seconds = entry["duration_seconds"]
+        if type(seconds) is not int or not 4 <= seconds <= 30:
+            raise ValueError(f"{slug} must use 4 to 30 whole seconds")
+
+        for field in ("title", "prompt"):
+            value = entry[field]
+            if not isinstance(value, str) or not value.strip() or "```" in value:
+                raise ValueError(f"{slug} must have a nonempty, copyable {field}")
+
+        for field in ("assets", "review"):
+            values = entry[field]
+            if not isinstance(values, list) or any(not isinstance(value, str) or not value.strip() for value in values):
+                raise ValueError(f"{slug} has an invalid {field} list")
+        if not entry["review"] or bool(entry["assets"]) != (mode != "text-to-video"):
+            raise ValueError(f"{slug} needs review criteria and the correct reference inputs")
+    return catalog
+
+
+def try_url(mode, slug):
+    query = urlencode({
+        "model": "magi-2",
+        "utm_source": "github",
+        "utm_medium": "referral",
+        "utm_campaign": "magi2_prompt_library",
+        "utm_content": slug,
+    })
+    return f"https://getmagi2.com/{mode}?{query}"
+
+
+def render(catalog):
+    lines = [
+        "# MAGI-2 Prompt Catalog",
+        "",
+        "Pick a prompt and copy the text. Open its studio link, paste the prompt, and add the listed references if needed. Review the model, settings, and credit cost before generating.",
+        "",
+        "These original starter prompts have not been rendered or benchmarked. The review checks describe what to look for if you run one.",
+        "",
+        "[Return to the guide and video gallery](README.md)",
+        "",
+        "## Browse by input mode",
+        "",
+    ]
+    for mode, label in MODES.items():
+        lines.extend([f"### {label}", ""])
+        for entry in catalog:
+            if entry["mode"] == mode:
+                lines.append(f"- [{entry['title']}](#{entry['slug']}) · {entry['duration_seconds']}s · {entry['aspect_ratio']}")
+        lines.append("")
+
+    for entry in catalog:
+        slug = entry["slug"]
+        mode = entry["mode"]
+        lines.extend([
+            f'<a name="{slug}"></a>',
+            "",
+            f"## {entry['title']}",
+            "",
+            f"**{MODES[mode]}** · {entry['duration_seconds']}s · {entry['aspect_ratio']}",
+            "",
+        ])
+        if entry["assets"]:
+            lines.extend(["**References**", ""])
+            lines.extend(f"- {asset}" for asset in entry["assets"])
+            lines.append("")
+
+        lines.extend(["```text", entry["prompt"], "```", "", "**Review the output**", ""])
+        lines.extend(f"- {check}" for check in entry["review"])
+        lines.extend(["", f"[Try this mode on GetMagi2]({try_url(mode, slug)})", ""])
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--check", action="store_true", help="Verify PROMPTS.md matches prompts.json")
+    args = parser.parse_args()
+    catalog = read_catalog()
+    output = ROOT / "PROMPTS.md"
+    markdown = render(catalog)
+    if args.check:
+        if not output.exists() or output.read_text(encoding="utf-8") != markdown:
+            parser.exit(1, "PROMPTS.md is out of date. Run python3 scripts/render_prompts.py.\n")
+        print(f"Validated {len(catalog)} prompts and PROMPTS.md.")
+        return
+    output.write_text(markdown, encoding="utf-8")
+    print(f"Rendered {len(catalog)} prompts to PROMPTS.md.")
+
+
+if __name__ == "__main__":
+    main()
