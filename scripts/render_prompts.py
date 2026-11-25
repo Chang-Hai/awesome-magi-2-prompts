@@ -1,7 +1,8 @@
-"""Regenerate the readable prompt catalog from prompts.json."""
+"""Render the GitHub gallery and copy-ready catalog from repository data."""
 import argparse
 import json
 import re
+from html import escape
 from pathlib import Path
 from urllib.parse import urlencode
 
@@ -104,20 +105,148 @@ def render(catalog):
     return "\n".join(lines).rstrip() + "\n"
 
 
+def read_gallery(catalog):
+    gallery = json.loads((ROOT / "data" / "gallery.json").read_text(encoding="utf-8"))
+    slugs = {entry["slug"] for entry in catalog}
+    if set(gallery["cards"]) != slugs:
+        raise ValueError("Every prompt needs exactly one gallery card")
+
+    grouped = [slug for group in gallery["groups"] for slug in group["prompts"]]
+    if len(grouped) != len(slugs) or set(grouped) != slugs:
+        raise ValueError("Every prompt must appear in exactly one use-case group")
+
+    featured = gallery["featured"]
+    if not featured or len(featured) != len(set(featured)) or not set(featured) <= slugs:
+        raise ValueError("Featured prompts must be unique catalog entries")
+
+    for path in [gallery["cover"], *(f"public/images/{slug}.webp" for slug in slugs)]:
+        if not (ROOT / path).is_file():
+            raise ValueError(f"Missing gallery image {path}")
+
+    for video in gallery["official_videos"]:
+        related = video.get("related_prompt")
+        if related and related not in slugs:
+            raise ValueError(f"Unknown gallery exercise {related}")
+    return gallery
+
+
+def render_card(entry, metadata, number, updated, featured=False):
+    slug = entry["slug"]
+    mode = entry["mode"]
+    width = 700 if featured else 600
+    heading = "###" if featured else "####"
+    tags = [MODES[mode], f"{entry['duration_seconds']}s", entry["aspect_ratio"], *metadata["tags"]]
+    lines = [
+        f'<a name="{slug}"></a>',
+        "",
+        f"{heading} {number}. {entry['title']}",
+        "",
+        " · ".join(f"`{tag}`" for tag in tags),
+        "",
+        "**Description**",
+        "",
+        metadata["description"],
+        "",
+        "**Prompt**",
+        "",
+        "```text",
+        entry["prompt"],
+        "```",
+        "",
+        "**Storyboard preview**",
+        "",
+        '<p align="center">',
+        f'  <img src="public/images/{slug}.webp" alt="{escape(metadata["alt"], quote=True)}" width="{width}" />',
+        "</p>",
+        "",
+        "*AI-generated concept still illustrating the brief.*",
+        "",
+        "**Inputs and output checks**",
+        "",
+    ]
+    if entry["assets"]:
+        lines.extend(["Upload:", "", *(f"- {asset}" for asset in entry["assets"]), ""])
+    lines.extend(f"- {check}" for check in entry["review"])
+    lines.extend([
+        "",
+        f"**Details** · GetMagi2 Editorial · Original prompt · English · {updated}",
+        "",
+        f"**[Try {MODES[mode].lower()} on GetMagi2]({try_url(mode, slug)})**"
+        f" · [Copy-ready catalog](PROMPTS.md#{slug})",
+    ])
+    return "\n".join(lines)
+
+
+def render_readme(catalog, gallery):
+    entries = {entry["slug"]: entry for entry in catalog}
+    featured = gallery["featured"]
+    groups = gallery["groups"]
+    cards = gallery["cards"]
+    updated = gallery["updated"]
+
+    categories = "\n".join(f"- [{group['title']}](#{group['id']}) · {group['brief']}" for group in groups)
+    featured_content = "\n\n---\n\n".join(
+        render_card(entries[slug], cards[slug], index, updated, featured=True)
+        for index, slug in enumerate(featured, start=1)
+    )
+    videos = []
+    for video in gallery["official_videos"]:
+        video_links = [f"**[Watch original MP4]({video['watch']})**", "[Sand.ai showcase](https://sand.ai/blog/magi-2#showcase)"]
+        related = video.get("related_prompt")
+        if related:
+            video_links.append(f"[Related original exercise](#{related})")
+        videos.append("\n\n".join([
+            f"### {video['title']}",
+            video["description"],
+            "**Source** · Sand.ai · November 24, 2026",
+            " · ".join(video_links),
+        ]))
+
+    chapters = []
+    number = len(featured)
+    for group in groups:
+        chapter = [f'<a name="{group["id"]}"></a>', f"### {group['title']}", group["brief"]]
+        for slug in group["prompts"]:
+            if slug in featured:
+                chapter.append(f"**Featured** · [{entries[slug]['title']}](#{slug})")
+            else:
+                number += 1
+                chapter.append(render_card(entries[slug], cards[slug], number, updated))
+        chapters.append("\n\n".join(chapter))
+
+    stats = "\n".join([
+        "| Original prompts | Featured prompts | Official videos | Last updated |",
+        "| ---: | ---: | ---: | --- |",
+        f"| {len(catalog)} | {len(featured)} | {len(videos)} | {updated} |",
+    ])
+    sections = {
+        "COVER": gallery["cover"],
+        "CATEGORIES": categories,
+        "STATS": stats,
+        "FEATURED": featured_content,
+        "VIDEOS": "\n\n".join(videos),
+        "ALL_PROMPTS": "\n\n---\n\n".join(chapters),
+    }
+    template = (ROOT / "data" / "README.template.md").read_text(encoding="utf-8")
+    return re.sub(r"\{\{([A-Z_]+)\}\}", lambda match: sections[match[1]], template)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--check", action="store_true", help="Verify PROMPTS.md matches prompts.json")
+    parser.add_argument("--check", action="store_true", help="Verify README.md and PROMPTS.md match the data")
     args = parser.parse_args()
     catalog = read_catalog()
-    output = ROOT / "PROMPTS.md"
-    markdown = render(catalog)
-    if args.check:
-        if not output.exists() or output.read_text(encoding="utf-8") != markdown:
-            parser.exit(1, "PROMPTS.md is out of date. Run python3 scripts/render_prompts.py.\n")
-        print(f"Validated {len(catalog)} prompts and PROMPTS.md.")
-        return
-    output.write_text(markdown, encoding="utf-8")
-    print(f"Rendered {len(catalog)} prompts to PROMPTS.md.")
+    gallery = read_gallery(catalog)
+    outputs = {"README.md": render_readme(catalog, gallery), "PROMPTS.md": render(catalog)}
+    for name, markdown in outputs.items():
+        path = ROOT / name
+        if args.check:
+            if not path.exists() or path.read_text(encoding="utf-8") != markdown:
+                parser.exit(1, f"{name} is out of date. Run python3 scripts/render_prompts.py.\n")
+        else:
+            path.write_text(markdown, encoding="utf-8")
+    verb = "Validated" if args.check else "Rendered"
+    print(f"{verb} README.md and PROMPTS.md for {len(catalog)} prompts.")
 
 
 if __name__ == "__main__":
