@@ -13,122 +13,157 @@
       "id": "product-and-e-commerce",
       "title": "Product and e-commerce",
       "brief": "Product reveals, consistent packaging, readable details, and short ad formats.",
-      "prompts": ["running-shoe-vertical-reveal", "two-angle-desk-lamp", "tea-steam-packshot", "ceramic-vase-listing-fidelity", "field-recorder-close-up"]
+      "prompts": [
+        "running-shoe-vertical-reveal",
+        "two-angle-desk-lamp",
+        "tea-steam-packshot",
+        "ceramic-vase-listing-fidelity",
+        "field-recorder-close-up"
+      ]
     },
     {
       "id": "cinematic-scenes",
       "title": "Cinematic scenes",
       "brief": "Slow camera moves, continuous atmosphere, and natural environmental sound.",
-      "prompts": ["rain-platform-departure", "tidepool-ebb-sound"]
+      "prompts": [
+        "rain-platform-departure",
+        "tidepool-ebb-sound"
+      ]
     },
     {
       "id": "dialogue-and-sound",
       "title": "Dialogue and sound",
       "brief": "Two-person dialogue, timing a sound effect, and keeping ambience continuous through action.",
-      "prompts": ["orchard-crate-foley", "ferry-ticket-hall-dialogue", "ink-roller-pass", "paper-mobile-window"]
+      "prompts": [
+        "orchard-crate-foley",
+        "ferry-ticket-hall-dialogue",
+        "ink-roller-pass",
+        "paper-mobile-window"
+      ]
     },
     {
       "id": "miniatures-and-animation",
       "title": "Miniatures and animation",
       "brief": "Handmade sets, style transitions, and controlled camera reveals.",
-      "prompts": ["paper-boat-style-transition", "miniature-bakery-finish", "miniature-stage-light-cue"]
+      "prompts": [
+        "paper-boat-style-transition",
+        "miniature-bakery-finish",
+        "miniature-stage-light-cue"
+      ]
     }
   ],
   "cards": {
     "running-shoe-vertical-reveal": {
       "description": "An eight-second vertical product reveal that keeps the shoe’s construction visible and reserves space for a caption.",
-      "tags": ["Vertical ad", "Product photography"],
+      "tags": [
+        "Vertical ad",
+        "Product photography"
+      ],
       "alt": "An unbranded teal running shoe on a concrete block"
     },
     "two-angle-desk-lamp": {
       "description": "A short product spot that uses two photos to preserve the lamp’s appearance and a phone clip to guide the camera. The switch click lands when the light comes on.",
-      "tags": ["Product commercial", "Sound cue"],
+      "tags": [
+        "Product commercial",
+        "Sound cue"
+      ],
       "alt": "A cream desk lamp casting warm light on a wooden desk"
     },
     "rain-platform-departure": {
       "description": "A continuous blue-hour shot with a fixed camera. The door tone, train movement, and fading hum give the clip a clear sequence.",
-      "tags": ["Cinematic", "Continuous shot"],
+      "tags": [
+        "Cinematic",
+        "Continuous shot"
+      ],
       "alt": "A regional train stopped at a rain-slick platform at blue hour"
     },
     "tea-steam-packshot": {
       "description": "A quiet product shot with controlled steam and gentle window light. The product stays fixed and the frame has room for sales copy.",
-      "tags": ["Packshot", "Food and drink"],
+      "tags": [
+        "Packshot",
+        "Food and drink"
+      ],
       "alt": "A clear glass of tea steaming next to dark packaging"
     },
     "paper-boat-style-transition": {
       "description": "One paper boat travels through a watercolor scene and into a handmade miniature. Its direction and the sound of the water carry through the style change.",
-      "tags": ["Animation", "Style transition"],
+      "tags": [
+        "Animation",
+        "Style transition"
+      ],
       "alt": "An orange paper boat beside a tiny bridge in a watercolor and paper landscape"
     },
     "miniature-bakery-finish": {
       "description": "A fixed starting scene in a miniature bakery, ending on a brass counter bell. A paper bag and the bell provide two simple timed actions.",
-      "tags": ["Miniature", "Sound cue"],
+      "tags": [
+        "Miniature",
+        "Sound cue"
+      ],
       "alt": "Miniature bread trays and a brass counter bell in a handmade bakery"
     },
     "ceramic-vase-listing-fidelity": {
       "description": "A narrow camera orbit built around two views of the same vase. Use it to check whether the handle, rim, and glaze stay consistent across angles.",
-      "tags": ["E-commerce", "Object consistency"],
+      "tags": [
+        "E-commerce",
+        "Object consistency"
+      ],
       "alt": "A blue ceramic vase with one handle on a white gallery plinth"
     },
     "field-recorder-close-up": {
       "description": "A short demonstration that shows a record button press, an indicator light, and a synchronized click. It reserves space for a caption.",
-      "tags": ["Product demo", "Macro"],
+      "tags": [
+        "Product demo",
+        "Macro"
+      ],
       "alt": "A matte handheld field recorder with a red indicator on a slate surface"
     },
     "orchard-crate-foley": {
       "description": "A close shot built around one wooden thump and one rolling pear. It makes the synchronization point easy to see and hear.",
-      "tags": ["Foley", "Food and drink"],
+      "tags": [
+        "Foley",
+        "Food and drink"
+      ],
       "alt": "A wooden crate filled with green pears being set on an orchard packing table"
     },
     "ferry-ticket-hall-dialogue": {
       "description": "A short, two-person exchange with a pause and a visible reaction. Both faces stay in frame for checking lip sync and speaker order.",
-      "tags": ["Dialogue", "Lip sync"],
+      "tags": [
+        "Dialogue",
+        "Lip sync"
+      ],
       "alt": "A traveler with a folded map speaking to a clerk inside a ferry terminal"
     },
     "ink-roller-pass": {
       "description": "An overhead tabletop scene in which one roller makes a single timed pass. Its sound begins and ends with visible contact.",
-      "tags": ["Art process", "Foley"],
+      "tags": [
+        "Art process",
+        "Foley"
+      ],
       "alt": "A printmaker moving a roller across a plate of blue ink"
     },
     "paper-mobile-window": {
       "description": "A slow movement exercise with countable paper shapes and one quiet contact sound. An optional end frame helps set the resting angle.",
-      "tags": ["First and last frames", "Soft motion"],
+      "tags": [
+        "First and last frames",
+        "Soft motion"
+      ],
       "alt": "Off-white pieces of a handmade paper mobile suspended beside a window"
     },
     "tidepool-ebb-sound": {
       "description": "An image defines the rocks, a video shows the direction of the wave, and an audio reference guides the wash and its quiet bubbling tail.",
-      "tags": ["Mixed references", "Field sound"],
+      "tags": [
+        "Mixed references",
+        "Field sound"
+      ],
       "alt": "A shallow wave washing over slate stones and amber seaweed in a tidepool"
     },
     "miniature-stage-light-cue": {
       "description": "A miniature theater rehearsal with a timed switch, a rising camera, and two short voice cues around the reveal.",
-      "tags": ["Miniature", "Timing and cuts"],
+      "tags": [
+        "Miniature",
+        "Timing and cuts"
+      ],
       "alt": "A handmade miniature stage with a pale blue curtain and a small lighting console"
     }
-  },
-  "official_videos": [
-    {
-      "title": "Through Five Art Styles",
-      "description": "Follow the subject and camera through five different visual styles within a single continuous take.",
-      "watch": "https://static.magi.world/media/website/01f847c8f459fa2b2831796dade7fa9b72acdfe5f77538044d455973f07c6362.mp4",
-      "related_prompt": "paper-boat-style-transition"
-    },
-    {
-      "title": "Into the Giant Flower World",
-      "description": "Compare the character reference sheet with the wardrobe in close-ups, low angles, and wide shots across three environments.",
-      "watch": "https://static.magi.world/media/website/7e823798bc17774a51d5f9ef8ad1cf6b1db750058c7c80a24bde83a46d83debc.mp4",
-      "related_prompt": "two-angle-desk-lamp"
-    },
-    {
-      "title": "Precision Timeline and Shot-Cut Control",
-      "description": "Watch for the entry, action, and cuts that Sand.ai directed with a written timeline.",
-      "watch": "https://static.magi.world/media/website/173dba46280a4b05ae603bd9f5b43a1fed9239a815ff5db022381bdf93693018.mp4",
-      "related_prompt": "miniature-stage-light-cue"
-    },
-    {
-      "title": "From Preview to MAGI-2",
-      "description": "Sand.ai uses a source screen recording and a text instruction to change the scene, including a cursor action and a transition.",
-      "watch": "https://static.magi.world/media/website/4a6c7a224b68c5637bd2c1e6cd75d723a205f57cd75a52fbcbe684544dd14c38.mp4"
-    }
-  ]
+  }
 }

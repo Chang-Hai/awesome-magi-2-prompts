@@ -4,7 +4,7 @@ import json
 import re
 from html import escape
 from pathlib import Path
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlsplit
 
 ROOT = Path(__file__).resolve().parent.parent
 MODES = {
@@ -14,6 +14,11 @@ MODES = {
 }
 RATIOS = {"21:9", "16:9", "4:3", "1:1", "3:4", "9:16"}
 FIELDS = {"slug", "title", "mode", "duration_seconds", "aspect_ratio", "assets", "prompt", "review"}
+EVIDENCE = {"official-demo": "Official demo", "published-prompt": "Published prompt"}
+CASE_FIELDS = {
+    "slug", "title", "category", "model", "duration_seconds", "width", "height",
+    "fps", "audio", "watch", "source", "credit", "evidence", "prompt", "description", "review",
+}
 
 
 def read_catalog():
@@ -123,11 +128,102 @@ def read_gallery(catalog):
         if not (ROOT / path).is_file():
             raise ValueError(f"Missing gallery image {path}")
 
-    for video in gallery["official_videos"]:
-        related = video.get("related_prompt")
-        if related and related not in slugs:
-            raise ValueError(f"Unknown gallery exercise {related}")
     return gallery
+
+
+def read_video_cases(catalog):
+    cases = json.loads((ROOT / "data" / "video-cases.json").read_text(encoding="utf-8"))
+    if not isinstance(cases, list) or not cases:
+        raise ValueError("video-cases.json must contain at least one attributed video")
+
+    prompt_slugs = {entry["slug"] for entry in catalog}
+    case_slugs = set()
+    watch_links = set()
+    for case in cases:
+        if not isinstance(case, dict) or not CASE_FIELDS <= case.keys() <= (CASE_FIELDS | {"related_prompt"}):
+            raise ValueError("A video case has missing or unexpected fields")
+
+        slug = case["slug"]
+        if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", slug) or slug in case_slugs or case["watch"] in watch_links:
+            raise ValueError(f"Use a unique slug and video URL for {slug}")
+        case_slugs.add(slug)
+        watch_links.add(case["watch"])
+
+        for name in ("source", "watch"):
+            url = urlsplit(case[name])
+            if url.scheme != "https" or not url.netloc:
+                raise ValueError(f"{slug} needs a public HTTPS {name} URL")
+        if any(type(case[key]) not in (int, float) or case[key] <= 0 for key in ("width", "height", "fps", "duration_seconds")):
+            raise ValueError(f"{slug} needs measured dimensions, frame rate, and duration")
+        if type(case["audio"]) is not bool or case["evidence"] not in EVIDENCE:
+            raise ValueError(f"{slug} needs an audio-stream flag and an evidence label")
+        if bool(case["prompt"]) != (case["evidence"] == "published-prompt"):
+            raise ValueError(f"{slug} must only show the actual prompt when the source has published it")
+        if "related_prompt" in case and case["related_prompt"] not in prompt_slugs:
+            raise ValueError(f"Unknown related exercise {case['related_prompt']} for {slug}")
+    return cases
+
+
+def case_duration(case):
+    return f"{case['duration_seconds']:.2f}".rstrip("0").rstrip(".") + "s"
+
+
+def case_category(case):
+    return case["category"].replace("-", " ").capitalize()
+
+
+def render_video_index(cases, case_page=""):
+    lines = [
+        "| Video case | Use | Runtime | Evidence | Play |",
+        "| --- | --- | ---: | --- | --- |",
+    ]
+    for case in cases:
+        slug = case["slug"]
+        label = EVIDENCE[case["evidence"]]
+        lines.append(
+            f"| [{case['title']}]({case_page}#{slug}) | {case_category(case)} | "
+            f"{case_duration(case)} | {label} | [▶ Watch Video]({case['watch']}) |"
+        )
+    return "\n".join(lines)
+
+
+def render_casebook(cases):
+    sections = [
+        "# MAGI-2 Video Case Library",
+        "[Back to the homepage](README.md) · [Original templates](TEMPLATES.md) · [Retest protocol](docs/RETEST.md)",
+        "Each case links to Sand.ai’s source and the published MP4. Runtime, frame rate, dimensions, and audio-stream flags describe the published files. Source notes identify which model and inputs are documented.",
+        render_video_index(cases),
+    ]
+    for case in cases:
+        label = EVIDENCE[case["evidence"]]
+        audio = "audio stream present" if case["audio"] else "no audio stream"
+        detail = f"{case_duration(case)} · {case['width']} × {case['height']} · {case['fps']:g} fps · {audio}"
+        card = [
+            f'<a name="{case["slug"]}"></a>',
+            "",
+            f"## {case['title']}",
+            "",
+            f"**{label}** · {case['model']} · {case_category(case)}",
+            "",
+            f"**[▶ Watch Video]({case['watch']})** · [Original source]({case['source']}) · **Credit** {case['credit']}",
+            "",
+            detail,
+            "",
+            case["description"],
+            "",
+            "**What to watch for**",
+            "",
+            *(f"- {check}" for check in case["review"]),
+            "",
+        ]
+        if case["prompt"]:
+            card.extend(["**Input prompt quoted from the original source**", "", "```text", case["prompt"], "```", ""])
+        else:
+            card.extend(["**Input prompt** · Full text unavailable in the cited source.", ""])
+        if related := case.get("related_prompt"):
+            card.append(f"[Try a separate original exercise](PROMPTS.md#{related})")
+        sections.append("\n".join(card).rstrip())
+    return "\n\n".join(sections) + "\n"
 
 
 def render_card(entry, metadata, number, updated, featured=False):
@@ -177,7 +273,7 @@ def render_card(entry, metadata, number, updated, featured=False):
     return "\n".join(lines)
 
 
-def render_readme(catalog, gallery):
+def render_readme(catalog, gallery, cases):
     entries = {entry["slug"]: entry for entry in catalog}
     featured = gallery["featured"]
     groups = gallery["groups"]
@@ -189,19 +285,6 @@ def render_readme(catalog, gallery):
         render_card(entries[slug], cards[slug], index, updated, featured=True)
         for index, slug in enumerate(featured, start=1)
     )
-    videos = []
-    for video in gallery["official_videos"]:
-        video_links = [f"**[Watch original MP4]({video['watch']})**", "[Sand.ai showcase](https://sand.ai/blog/magi-2#showcase)"]
-        related = video.get("related_prompt")
-        if related:
-            video_links.append(f"[Related original exercise](#{related})")
-        videos.append("\n\n".join([
-            f"### {video['title']}",
-            video["description"],
-            "**Source** · Sand.ai · November 24, 2026",
-            " · ".join(video_links),
-        ]))
-
     chapters = []
     number = len(featured)
     for group in groups:
@@ -214,17 +297,18 @@ def render_readme(catalog, gallery):
                 chapter.append(render_card(entries[slug], cards[slug], number, updated))
         chapters.append("\n\n".join(chapter))
 
+    published_prompts = sum(case["evidence"] == "published-prompt" for case in cases)
     stats = "\n".join([
-        "| Original prompts | Featured prompts | Official videos | Last updated |",
+        "| Source-checked videos | Exact prompts from sources | Original prompts | Last updated |",
         "| ---: | ---: | ---: | --- |",
-        f"| {len(catalog)} | {len(featured)} | {len(videos)} | {updated} |",
+        f"| {len(cases)} | {published_prompts} | {len(catalog)} | {updated} |",
     ])
     sections = {
         "COVER": gallery["cover"],
         "CATEGORIES": categories,
         "STATS": stats,
         "FEATURED": featured_content,
-        "VIDEOS": "\n\n".join(videos),
+        "VIDEO_INDEX": render_video_index(cases, "CASES.md"),
         "ALL_PROMPTS": "\n\n---\n\n".join(chapters),
     }
     template = (ROOT / "data" / "README.template.md").read_text(encoding="utf-8")
@@ -233,11 +317,16 @@ def render_readme(catalog, gallery):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--check", action="store_true", help="Verify README.md and PROMPTS.md match the data")
+    parser.add_argument("--check", action="store_true", help="Verify README.md, PROMPTS.md, and CASES.md match the data")
     args = parser.parse_args()
     catalog = read_catalog()
     gallery = read_gallery(catalog)
-    outputs = {"README.md": render_readme(catalog, gallery), "PROMPTS.md": render(catalog)}
+    cases = read_video_cases(catalog)
+    outputs = {
+        "README.md": render_readme(catalog, gallery, cases),
+        "PROMPTS.md": render(catalog),
+        "CASES.md": render_casebook(cases),
+    }
     for name, markdown in outputs.items():
         path = ROOT / name
         if args.check:
@@ -246,7 +335,7 @@ def main():
         else:
             path.write_text(markdown, encoding="utf-8")
     verb = "Validated" if args.check else "Rendered"
-    print(f"{verb} README.md and PROMPTS.md for {len(catalog)} prompts.")
+    print(f"{verb} README.md, PROMPTS.md, and CASES.md for {len(catalog)} prompts and {len(cases)} videos.")
 
 
 if __name__ == "__main__":

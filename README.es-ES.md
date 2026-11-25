@@ -8,6 +8,8 @@
 
 Una biblioteca de prompts para MAGI-2, el modelo de vídeo de Sand.ai. Elige un punto de partida para anuncios de producto, escenas cinematográficas, diálogos, efectos de sonido o animación de miniaturas. Cada ficha reúne los ajustes sugeridos, los materiales necesarios y las comprobaciones para revisar el vídeo.
 
+[Casos de vídeo con fuentes](CASES.md) · [Plantillas con códigos de tiempo](TEMPLATES.md) · [Protocolo de repetición entre modelos](docs/RETEST.md)
+
 **Por uso** · [Producto y comercio electrónico](README.md#product-and-e-commerce) · [Escenas cinematográficas](README.md#cinematic-scenes) · [Diálogo y sonido](README.md#dialogue-and-sound) · [Miniaturas y animación](README.md#miniatures-and-animation)
 
 **Por tipo de entrada** · [De texto a vídeo](PROMPTS.md#text-to-video) · [De imagen a vídeo](PROMPTS.md#image-to-video) · [De referencias a vídeo](PROMPTS.md#reference-to-video)

@@ -1,0 +1,63 @@
+name: Video case or rerun
+description: Submit a sourced MAGI-2 video case, a reproducible rerun, or an attempted run that failed.
+title: "[Video case] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use the [retest guide](https://github.com/Chang-Hai/awesome-magi-2-prompts/blob/main/docs/RETEST.md) to record what was run and how you checked it.
+        This issue is public. Omit API keys, access tokens, private files, and signed links.
+  - type: dropdown
+    id: baseline
+    attributes:
+      label: Baseline type
+      options:
+        - official-demo
+        - published-prompt
+        - original-template
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source and authorship
+      description: Link the original developer demo, public post, or repository recipe. Identify the creator and state whether you ran the generation, observed a source clip, or adapted a published prompt.
+    validations:
+      required: true
+  - type: textarea
+    id: inputs
+    attributes:
+      label: Prompt, assets, and generation settings
+      description: Include the exact prompt, the files in order and their roles, provider, model variant, run date, input mode, duration, aspect ratio, resolution, audio setting, and seed if available. Record substitutions or information the source does not disclose.
+    validations:
+      required: true
+  - type: dropdown
+    id: outcome
+    attributes:
+      label: Outcome
+      options:
+        - Source clip inspected without a new run
+        - Generated clip passed the checks
+        - Generated clip failed one or more checks
+        - Generation failed without a clip
+    validations:
+      required: true
+  - type: textarea
+    id: review
+    attributes:
+      label: Output or failure evidence and review
+      description: Link the public video or provide a shareable error. Record the checks, expected and observed timestamps, dialogue or foley sync, visual continuity, and where a long clip drifts. Mark checks that could not be measured.
+    validations:
+      required: true
+  - type: textarea
+    id: cost
+    attributes:
+      label: Attempts, time, and cost
+      description: List billed attempts and retries, refunds, queue or render time, and accepted clips. Give the currency or credit unit and mark any amounts that are unknown.
+  - type: checkboxes
+    id: permissions
+    attributes:
+      label: Publication rights and attribution
+      options:
+        - label: I have permission to publish any media I attach here. I credited the source of third-party material and used original public links for material I am only referencing.
+          required: true

@@ -8,7 +8,13 @@
 
 这套提示词适合用 Sand.ai 的 MAGI-2 制作产品广告、电影镜头、人物对白和有声短片。每条英文提示词附建议时长、画幅、参考素材和成片检查项。
 
-**[阅读完整提示词库](README.md#all-prompts)** · **[观看 Sand.ai 官方样片](README.md#official-video-gallery)** · **[打开 GetMagi2 工作室](https://getmagi2.com/text-to-video?model=magi-2&utm_source=github&utm_medium=referral&utm_campaign=magi2_prompt_library&utm_content=readme_zh)**
+**[先看 10 个 MAGI-2 视频案例](CASES.md)** · **[复制镜头模板](TEMPLATES.md)** · **[阅读完整提示词库](README.md#all-prompts)** · **[打开 GetMagi2 工作室](https://getmagi2.com/text-to-video?model=magi-2&utm_source=github&utm_medium=referral&utm_campaign=magi2_prompt_library&utm_content=readme_zh)**
+
+## ▶ 真实视频、模板和复测
+
+[视频案例库](CASES.md)逐条给出 **Watch Video**、原始出处、作者、时长、分辨率和音轨信息。有公开原提示词的案例会单独标注。想自己做一条类似的短片，可以用[六套视频模板](TEMPLATES.md)规划时间线、切镜、参考素材和声音。
+
+[跨模型复测流程](docs/RETEST.md)说明怎样用同一提示词和素材对比 MAGI-2 与其他模型，并记录失败片段和实际花费。目前公开的跨模型复测结果为 0。
 
 ## 🏷️ 按用途找提示词
 

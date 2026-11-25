@@ -10,12 +10,16 @@ Open a pull request with an original prompt, a correction, or an example with cl
 4. Write the copy-ready `prompt` and add practical `review` checks. For example, check that a switch click lands on contact and the product shape stays consistent at the cut.
 5. Regenerate the Markdown and run the [local checks](LOCAL_DEVELOPMENT.md).
 
-## Add a gallery entry
+## Add a video case or a retest
 
-Edit [data/gallery.json](../data/gallery.json) and place any accompanying original or permitted image in [public/images](../public/images/). Use a relative path for a repository asset and a source URL for an externally hosted example.
+Use the [video case issue form](https://github.com/Chang-Hai/awesome-magi-2-prompts/issues/new?template=video-case.yml) or update [data/video-cases.json](../data/video-cases.json). Include the creator, original source, published MP4 URL, model, and the distributed file’s measured duration, dimensions, frame rate, and audio-stream flag. Add viewing notes that someone can check against the clip.
 
-- **Storyboard or illustration.** Identify the prompt it illustrates by slug and label the image as a storyboard or illustration. Put example input assets in their own roles so readers can tell what to supply.
-- **Documented output.** Identify the exact prompt, input files in their original order and roles, model and provider, duration, aspect ratio, and any relevant settings such as audio or seed. Include the result link and the generation date. If the run used edited text or different inputs, record those differences with the result.
-- **Official showcase.** Credit the publisher and link to the original clip or showcase. Keep its documented inputs and outputs together. Pair the clip with a repository prompt only if that exact prompt and its inputs produced the clip.
+- `official-demo` pairs a video with its source. Leave the prompt field empty when the exact text is unavailable.
+- `published-prompt` includes the creator's actual prompt when its source permits sharing or quotation. State which inputs and settings the source discloses.
+- `original-template` is a new or adapted recipe. Add it to the [prompt catalog](../prompts.json) or [templates](../TEMPLATES.md). Its storyboard may illustrate the brief.
 
-For media you upload, record the creator or source and the basis for redistributing it. Use assets you created or have permission to share. Use a source link if you only have permission to reference the work.
+For a cross-model run, follow the [retest protocol](RETEST.md) and record rejected or failed runs alongside accepted results. Link original footage where you have permission to reference it. For any uploaded video or image, document the source, creator, and permission to redistribute.
+
+## Add a storyboard
+
+Edit [data/gallery.json](../data/gallery.json) and place an original or permitted WebP in [public/images](../public/images/) with the same filename stem as the prompt slug. Describe it as a storyboard and supply alt text. A case may link a related exercise separately from the source’s actual inputs.

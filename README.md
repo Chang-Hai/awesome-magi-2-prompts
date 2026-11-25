@@ -1,30 +1,82 @@
+**English** · [简体中文](README.zh-CN.md) · [日本語](README.ja-JP.md) · [Español](README.es-ES.md)
+
 <a href="https://getmagi2.com/?utm_source=github&amp;utm_medium=referral&amp;utm_campaign=magi2_prompt_library&amp;utm_content=cover#tool-generator">
-  <img src="public/images/magi-2-cover.webp" alt="MAGI-2 Prompt Library by GetMagi2, with concept scenes of a desk lamp, train platform, and paper boat" width="100%" />
+  <img src="public/images/magi-2-cover.webp" alt="MAGI-2 video prompt library by GetMagi2" width="100%" />
 </a>
 
-# 🎬 Awesome MAGI-2 Prompts
+# 🎬 Awesome MAGI-2 Video Prompts
 
 [![GitHub stars](https://img.shields.io/github/stars/Chang-Hai/awesome-magi-2-prompts?style=social)](https://github.com/Chang-Hai/awesome-magi-2-prompts/stargazers)
 [![Validate catalog](https://github.com/Chang-Hai/awesome-magi-2-prompts/actions/workflows/validate.yml/badge.svg)](https://github.com/Chang-Hai/awesome-magi-2-prompts/actions/workflows/validate.yml)
-[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-2b7a5e)](docs/CONTRIBUTING.md)
 
-A curated collection of MAGI-2 video prompts for Sand.ai’s model. Explore product demos, cinematic scenes, dialogue, foley, and mixed references. Each original recipe includes a prompt, suggested settings, reference inputs, and a checklist for reviewing the output.
+Watch MAGI-2 outputs at their source, study the camera and audio, then adapt a timed video prompt. Each published clip links to its author, its original context, and its playable MP4.
 
-**English** · [简体中文](README.zh-CN.md) · [日本語](README.ja-JP.md) · [Español](README.es-ES.md)
+**[Watch MAGI-2 videos](#official-video-gallery) · [Copy a video template](TEMPLATES.md) · [Browse all prompts](PROMPTS.md) · [Open GetMagi2](https://getmagi2.com/text-to-video?model=magi-2&utm_source=github&utm_medium=referral&utm_campaign=magi2_prompt_library&utm_content=readme)**
 
----
+| Source-checked videos | Exact prompts from sources | Original prompts | Last updated |
+| ---: | ---: | ---: | --- |
+| 10 | 1 | 14 | 2026-11-25 |
 
-## 🌐 Browse the gallery and try MAGI-2
+<a name="video-gallery"></a>
+<a name="official-video-gallery"></a>
 
-| On GitHub | In the GetMagi2 studio |
+## ▶ Watch MAGI-2 videos
+
+Pick a clip, turn on sound where available, and read the case notes for what to look for. Sample durations, dimensions, frame rates, and audio-stream information describe the distributed files. See the original source for model and workflow claims.
+
+| Video case | Use | Runtime | Evidence | Play |
+| --- | --- | ---: | --- | --- |
+| [Through Five Art Styles](CASES.md#through-five-art-styles) | Cinematic | 29.8s | Official demo | [▶ Watch Video](https://static.magi.world/media/website/01f847c8f459fa2b2831796dade7fa9b72acdfe5f77538044d455973f07c6362.mp4) |
+| [Into the Giant Flower World](CASES.md#into-the-giant-flower-world) | Mixed reference | 16.87s | Official demo | [▶ Watch Video](https://static.magi.world/media/website/7e823798bc17774a51d5f9ef8ad1cf6b1db750058c7c80a24bde83a46d83debc.mp4) |
+| [Precision Timeline & Shot-Cut Control](CASES.md#precision-timeline-shot-cuts) | Timeline | 29.8s | Official demo | [▶ Watch Video](https://static.magi.world/media/website/173dba46280a4b05ae603bd9f5b43a1fed9239a815ff5db022381bdf93693018.mp4) |
+| [From “Preview” to “MAGI-2”](CASES.md#from-preview-to-magi-2) | Editing | 9.96s | Official demo | [▶ Watch Video](https://static.magi.world/media/website/4a6c7a224b68c5637bd2c1e6cd75d723a205f57cd75a52fbcbe684544dd14c38.mp4) |
+| [Cinematic Quality, Close-Up Ready](CASES.md#cinematic-close-up) | Cinematic | 16.76s | Official demo | [▶ Watch Video](https://static.magi.world/media/website/07dde840e694e704982b6b1b17781d0b4849ed024f3423feb12422febf87b622.mp4) |
+| [Studio-Quality Ads, Without the Studio](CASES.md#studio-quality-product-ads) | Product ads | 10.4s | Official demo | [▶ Watch Video](https://static.magi.world/media/website/5c5be9adaa2193356db9a80e336972e61440013b638004343c8a6c7b5e7e4e8b.mp4) |
+| [Every Character, a Method Actor](CASES.md#every-character-method-actor) | Performance | 19.92s | Official demo | [▶ Watch Video](https://static.magi.world/media/website/eee1aab938a2572da64934fcad9ec311505e823b71e0c0a3eb1dcb8dc0d1437c.mp4) |
+| [Boat Dialogue Between Lu Su and Zhuge Liang](CASES.md#boat-dialogue-autonomous-directing) | Dialogue | 15s | Official demo | [▶ Watch Video](https://static.magi.world/media/website/7e0348ab6faac8f74dc85025a0970d6bd73158c132c95d1e5a11cfe42a0cffd9.mp4) |
+| [Alpine Lake — After Reinforcement Learning](CASES.md#alpine-lake-after-reinforcement-learning) | Research | 30.16s | Official demo | [▶ Watch Video](https://static.magi.world/media/website/3dafefd20ec804cea9737517b692eadf229dc147437351f58337acc013876b39.mp4) |
+| [9×9 Sudoku Probe](CASES.md#sudoku-visual-reasoning-probe) | Research | 7.57s | Published prompt | [▶ Watch Video](https://static.magi.world/media/website/3522a0a956303744982926dce8df03555765e7ff8c7693ba887a3e5d6e60a40a.mp4) |
+
+**[Open the full video case library](CASES.md)** for input evidence, creator attribution, and viewing notes. A linked original exercise is a separate prompt to try.
+
+### What the labels mean
+
+| Label | Evidence available |
 | --- | --- |
-| Browse by use case and view storyboard stills. | Pick a generation mode and configure its available settings. |
-| Copy the complete prompt and see which inputs it uses. | Paste the prompt and add your own photos, video, or audio if supported. |
-| Watch source-attributed examples from Sand.ai. | Check the selected model and credit cost before generating. |
+| **Official demo** | Creator’s published video and source page. Copy-ready original prompt unavailable. |
+| **Published prompt** | Creator’s published video and exact input text. Additional settings or references may still be required. |
+| **Original template** | A new prompt or timed exercise from this repository. The accompanying still is a storyboard concept. |
 
-**[Browse web prompt ideas](https://getmagi2.com/?utm_source=github&utm_medium=referral&utm_campaign=magi2_prompt_library&utm_content=web_gallery#tool-generator)** · **[Open the MAGI-2 studio](https://getmagi2.com/text-to-video?model=magi-2&utm_source=github&utm_medium=referral&utm_campaign=magi2_prompt_library&utm_content=readme)**
+## 🚀 Start here
 
-### 🏷️ Browse by category
+1. Choose a [template by format](TEMPLATES.md) or a complete [original prompt](PROMPTS.md).
+2. Replace the bracketed fields. For mixed references, say what each file controls.
+3. Open the matching GetMagi2 studio mode, paste the prompt, and check your settings and credit cost.
+4. Review the result with the prompt beside it. Check the timing of cuts, movement, or sound before adding complexity.
+
+[Text to video](https://getmagi2.com/text-to-video?model=magi-2&utm_source=github&utm_medium=referral&utm_campaign=magi2_prompt_library&utm_content=start_text) · [Image to video](https://getmagi2.com/image-to-video?model=magi-2&utm_source=github&utm_medium=referral&utm_campaign=magi2_prompt_library&utm_content=start_image) · [Reference to video](https://getmagi2.com/reference-to-video?model=magi-2&utm_source=github&utm_medium=referral&utm_campaign=magi2_prompt_library&utm_content=start_reference)
+
+## 🧩 Reusable video templates
+
+The images below illustrate template briefs. Open a template for the timed prompt, editable fields, and review steps.
+
+<table>
+<tr>
+<td width="33%" valign="top"><a href="TEMPLATES.md#continuous-cinematic-take"><img width="234" src="public/images/rain-platform-departure.webp" alt="Storyboard for a continuous shot"></a><br><b><a href="TEMPLATES.md#continuous-cinematic-take">Continuous cinematic take</a></b><br><sub>One camera move and continuous ambience.</sub></td>
+<td width="33%" valign="top"><a href="TEMPLATES.md#product-ad-with-mixed-references"><img width="234" src="public/images/two-angle-desk-lamp.webp" alt="Storyboard for a product ad"></a><br><b><a href="TEMPLATES.md#product-ad-with-mixed-references">Product ad with mixed references</a></b><br><sub>Keep the product consistent across two angles.</sub></td>
+<td width="33%" valign="top"><a href="TEMPLATES.md#two-person-dialogue-and-reactions"><img width="234" src="public/images/ferry-ticket-hall-dialogue.webp" alt="Storyboard for two-person dialogue"></a><br><b><a href="TEMPLATES.md#two-person-dialogue-and-reactions">Two-person dialogue</a></b><br><sub>Time the lines, pause, and reaction.</sub></td>
+</tr>
+</table>
+
+[Open all six templates](TEMPLATES.md), including a 30-second shot list, first-and-last-frame setup, and a measurable sound cue.
+
+## 🔁 Cross-model retests
+
+Published reruns: **0**. The video cases above are source-checked examples. Use the protocol to compare your own MAGI-2 run with another model and submit both successful and failed attempts.
+
+[Read the retest protocol](docs/RETEST.md) · [Submit a video case or retest](https://github.com/Chang-Hai/awesome-magi-2-prompts/issues/new?template=video-case.yml)
+
+## 🏷️ Browse original prompts by use case
 
 - [Product and e-commerce](#product-and-e-commerce) · Product reveals, consistent packaging, readable details, and short ad formats.
 - [Cinematic scenes](#cinematic-scenes) · Slow camera moves, continuous atmosphere, and natural environmental sound.
@@ -33,42 +85,15 @@ A curated collection of MAGI-2 video prompts for Sand.ai’s model. Explore prod
 
 **By input** · [Text to video](PROMPTS.md#text-to-video) · [Image to video](PROMPTS.md#image-to-video) · [Reference to video](PROMPTS.md#reference-to-video)
 
-**By technique** · [Continuous shot](#rain-platform-departure) · [Style transition](#paper-boat-style-transition) · [First and last frames](#paper-mobile-window) · [Lip sync](#ferry-ticket-hall-dialogue) · [Foley timing](#orchard-crate-foley)
-
----
-
-## 📖 Table of contents
-
-- [What is MAGI-2?](#what-is-magi-2)
-- [Library statistics](#library-statistics)
-- [Featured prompts](#featured-prompts)
-- [Official video gallery](#official-video-gallery)
-- [All prompts](#all-prompts)
-- [How to contribute](#how-to-contribute)
-
 <a name="what-is-magi-2"></a>
 
-## What is MAGI-2?
+## Model and provider notes
 
-Sand.ai’s flagship generates video and synchronized sound in the same workflow. It supports up to 30 seconds of 1080p video at 25 fps. Mixed-reference mode can use images for appearance, video for motion, and audio for sound. First and last frames may be available in a separate image-to-video mode. The downloadable 114B MAGI-2 Preview has a separate pipeline for fixed 10-second clips. [Flagship release](https://sand.ai/blog/magi-2) · [Preview repository](https://github.com/SandAI-org/MAGI-2-preview) · [Frequently asked questions](docs/FAQ.md)
-
-<a name="library-statistics"></a>
-
-## 📊 Library statistics
-
-<div align="center">
-
-| Original prompts | Featured prompts | Official videos | Last updated |
-| ---: | ---: | ---: | --- |
-| 14 | 5 | 4 | 2026-11-25 |
-
-</div>
-
-The still images in the prompt cards are AI-generated storyboards created for this repository. They illustrate the brief. The [official video gallery](#official-video-gallery) contains separate MAGI-2 generation examples from Sand.ai.
+Sand.ai’s hosted flagship supports up to 30 seconds of 1080p video at 25 fps and generates sound alongside the video. The downloadable 114B MAGI-2 Preview uses a separate workflow with fixed 10-second output. Providers can expose different input modes, output settings, and prices. [Sand.ai flagship release](https://sand.ai/blog/magi-2) · [Preview repository](https://github.com/SandAI-org/MAGI-2-preview) · [Provider and pricing FAQ](docs/FAQ.md)
 
 <a name="featured-prompts"></a>
 
-## ⭐ Featured prompts
+## ⭐ Featured original prompts
 
 <a name="two-angle-desk-lamp"></a>
 
@@ -256,52 +281,9 @@ Upload:
 
 **[Try reference to video on GetMagi2](https://getmagi2.com/reference-to-video?model=magi-2&utm_source=github&utm_medium=referral&utm_campaign=magi2_prompt_library&utm_content=tidepool-ebb-sound)** · [Copy-ready catalog](PROMPTS.md#tidepool-ebb-sound)
 
----
-
-<a name="video-gallery"></a>
-<a name="official-video-gallery"></a>
-
-## 🎞️ Official video gallery
-
-Published by Sand.ai in its [official MAGI-2 showcase](https://sand.ai/blog/magi-2#showcase). These videos open at their original source. The exact prompts for these clips were not published with the showcase. Related exercises in this repository are original examples.
-
-### Through Five Art Styles
-
-Follow the subject and camera through five different visual styles within a single continuous take.
-
-**Source** · Sand.ai · November 24, 2026
-
-**[Watch original MP4](https://static.magi.world/media/website/01f847c8f459fa2b2831796dade7fa9b72acdfe5f77538044d455973f07c6362.mp4)** · [Sand.ai showcase](https://sand.ai/blog/magi-2#showcase) · [Related original exercise](#paper-boat-style-transition)
-
-### Into the Giant Flower World
-
-Compare the character reference sheet with the wardrobe in close-ups, low angles, and wide shots across three environments.
-
-**Source** · Sand.ai · November 24, 2026
-
-**[Watch original MP4](https://static.magi.world/media/website/7e823798bc17774a51d5f9ef8ad1cf6b1db750058c7c80a24bde83a46d83debc.mp4)** · [Sand.ai showcase](https://sand.ai/blog/magi-2#showcase) · [Related original exercise](#two-angle-desk-lamp)
-
-### Precision Timeline and Shot-Cut Control
-
-Watch for the entry, action, and cuts that Sand.ai directed with a written timeline.
-
-**Source** · Sand.ai · November 24, 2026
-
-**[Watch original MP4](https://static.magi.world/media/website/173dba46280a4b05ae603bd9f5b43a1fed9239a815ff5db022381bdf93693018.mp4)** · [Sand.ai showcase](https://sand.ai/blog/magi-2#showcase) · [Related original exercise](#miniature-stage-light-cue)
-
-### From Preview to MAGI-2
-
-Sand.ai uses a source screen recording and a text instruction to change the scene, including a cursor action and a transition.
-
-**Source** · Sand.ai · November 24, 2026
-
-**[Watch original MP4](https://static.magi.world/media/website/4a6c7a224b68c5637bd2c1e6cd75d723a205f57cd75a52fbcbe684544dd14c38.mp4)** · [Sand.ai showcase](https://sand.ai/blog/magi-2#showcase)
-
----
-
 <a name="all-prompts"></a>
 
-## 📋 All prompts
+## 📋 All original prompts
 
 <a name="product-and-e-commerce"></a>
 
@@ -680,12 +662,10 @@ Upload:
 
 **[Try reference to video on GetMagi2](https://getmagi2.com/reference-to-video?model=magi-2&utm_source=github&utm_medium=referral&utm_campaign=magi2_prompt_library&utm_content=miniature-stage-light-cue)** · [Copy-ready catalog](PROMPTS.md#miniature-stage-light-cue)
 
----
-
 <a name="how-to-contribute"></a>
 
-## 🤝 How to contribute
+## Contributing
 
-Add an original prompt or a documented generation. Include the model version, settings, actual prompt and reference inputs, and the source or permission for every asset you submit. [Contribution guidelines](docs/CONTRIBUTING.md) · [Local development](docs/LOCAL_DEVELOPMENT.md) · [Machine-readable catalog](prompts.json)
+Share an original prompt, a publicly sourced video, or a documented retest. Give the author and source, mark which inputs are available, and include permission details for any assets you submit. [Contribution guidelines](docs/CONTRIBUTING.md) · [Local development](docs/LOCAL_DEVELOPMENT.md) · [Video case data](data/video-cases.json)
 
-Maintained by [GetMagi2](https://getmagi2.com/), an independent online studio and model guide. Sand.ai develops MAGI-2. Linked official videos are credited to and hosted by Sand.ai. [Repository layout reference](https://github.com/YouMind-OpenLab/awesome-nano-banana-pro-prompts)
+Maintained by [GetMagi2](https://getmagi2.com/), an independent online studio and model guide. Formatting and evidence practices are informed by [LearnPrompt’s Awesome Seedance](https://github.com/LearnPrompt/awesome-seedance) and [YouMind’s Seedance 2 prompts](https://github.com/YouMind-OpenLab/awesome-seedance-2-prompts).

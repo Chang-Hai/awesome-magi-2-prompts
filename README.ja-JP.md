@@ -8,6 +8,8 @@
 
 Sand.ai の動画生成モデル MAGI-2 で使えるプロンプト集です。商品紹介、映画風のシーン、会話や効果音、ミニチュアのアニメーションなど、用途に合わせて選べます。各例には推奨設定、必要な素材、生成後の確認項目があります。
 
+[出典付き動画事例](CASES.md) · [タイムコード付きテンプレート](TEMPLATES.md) · [別モデルでの再検証](docs/RETEST.md)
+
 **用途別** · [商品紹介・EC](README.md#product-and-e-commerce) · [映画風のシーン](README.md#cinematic-scenes) · [会話・音声](README.md#dialogue-and-sound) · [ミニチュア・アニメーション](README.md#miniatures-and-animation)
 
 **入力形式別** · [テキストから動画](PROMPTS.md#text-to-video) · [画像から動画](PROMPTS.md#image-to-video) · [参照素材から動画](PROMPTS.md#reference-to-video)
